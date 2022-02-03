@@ -4,8 +4,6 @@ import 'bloc/user_bloc.dart';
 import 'bloc/user_event.dart';
 import 'bloc/user_repository.dart';
 import 'user_form.dart';
-
-
 class UserScreen extends StatelessWidget {
   const UserScreen({Key? key}) : super(key: key);
 
@@ -16,7 +14,8 @@ class UserScreen extends StatelessWidget {
         body: BlocProvider(
             create: (context) {
               return UserBloc(userRepository)
-                ..add(const AppStarted());
+                ..add(const AppStarted())//Validar si existe usuarios localmente o ir a descargarlos
+                ..add(const UpdateLocalUsers());//Actualizar usuarios locales en segundo plano
             },
             child: const UserForm()));
   }

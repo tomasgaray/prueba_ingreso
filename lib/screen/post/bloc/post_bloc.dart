@@ -12,7 +12,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
       try {
         emit(PostLoading(message: "Getting posts..."));
         List<Post> posts = await postRepository.getPostByUserId(userId: event.userId);
-        emit(FindPosts(posts: posts));
+        posts.isEmpty ? emit(ListEmptyPosts()):emit(FindPosts(posts: posts));
       } catch (error) {
         emit(PostFailure(error: error.toString()));
       }

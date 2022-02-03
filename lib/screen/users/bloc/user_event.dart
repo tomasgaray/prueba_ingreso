@@ -10,3 +10,10 @@ abstract class UserEvent extends Equatable {
 class AppStarted extends UserEvent {
   const AppStarted();
 }
+class UpdateLocalUsers extends UserEvent {
+  const UpdateLocalUsers();
+}
+class SearchUserByName extends UserEvent {
+  final String name;
+  const SearchUserByName({required this.name});
+}

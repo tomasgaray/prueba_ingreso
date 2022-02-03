@@ -39,6 +39,16 @@ class UserRepository {
       return Future.error(Helper.catchError(error));
     }
   }
+  Future<List<User>> searchUserByName({required String name})async{
+    try {
+      name = name.toLowerCase();
+      List<User> localUsers = await getUsersLocal();
+      var searchUsers = localUsers.where((element) => (element.name??"").toLowerCase().contains(name)).toList();
+      return searchUsers;
+    } catch (error) {
+      return Future.error(Helper.catchError(error));
+    }
+  }
 
   Future<void> saveUsersLocal({required List<User> users}) async{ 
      try {

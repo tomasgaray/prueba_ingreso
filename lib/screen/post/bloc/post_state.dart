@@ -17,6 +17,9 @@ class FindPosts extends PostState {
   final List<Post> posts;
   FindPosts({required this.posts});
 }
+class ListEmptyPosts extends PostState {
+  ListEmptyPosts();
+}
 
 class PostFailure extends PostState {
   final String? error;

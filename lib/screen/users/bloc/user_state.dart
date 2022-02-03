@@ -17,6 +17,9 @@ class FindUsers extends UserState {
   final List<User> users;
   FindUsers({required this.users});
 }
+class ListEmpty extends UserState {
+  ListEmpty();
+}
 
 class UserFailure extends UserState {
   final String? error;
