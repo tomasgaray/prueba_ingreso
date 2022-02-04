@@ -1,5 +1,3 @@
-import 'address.dart';
-
 class User {
   int? id;
   String? name;
@@ -7,7 +5,6 @@ class User {
   String? email;
   String? phone;
   String? website;
-  Address? address;
 
   User({
         this.id,
@@ -16,7 +13,6 @@ class User {
         this.email,
         this.phone,
         this.website,
-        this.address
       });
 
   factory User.deserialize(Map<String, dynamic> json) {
@@ -27,7 +23,6 @@ class User {
       email: json['email'],
       phone: json['phone'],
       website: json['website'],
-      address: Address.deserialize(json['address']),
     );
   }
 
@@ -38,6 +33,5 @@ class User {
         'email': email,
         'phone': phone,
         'website': website,
-        'address': address?.toJson(),
       };
 }

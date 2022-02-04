@@ -1,30 +1,76 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility that Flutter provides. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
+import 'package:bloc_test/bloc_test.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:prueba_ingreso/main.dart';
+import 'package:prueba_ingreso/models/post.dart';
+import 'package:prueba_ingreso/models/user/user.dart';
+import 'mock_post/bloc/mock_post_bloc.dart';
+import 'mock_post/bloc/mock_post_event.dart';
+import 'mock_post/bloc/mock_post_repository.dart';
+import 'mock_post/bloc/mock_post_state.dart';
+import 'mock_user/bloc/mock_user_bloc.dart';
+import 'mock_user/bloc/mock_user_event.dart';
+import 'mock_user/bloc/mock_user_repository.dart';
+import 'mock_user/bloc/mock_user_state.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  group('Bloc test',(){
+    late MockUserBloc mockUserBloc;
+    MockUserRepository mockUserRepository;
+    late MockPostBloc mockPostBloc;
+    MockPostRepository mockPostRepository;
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    setUp((){
+      EquatableConfig.stringify = true;
+      mockUserRepository = MockUserRepository();
+      mockUserBloc = MockUserBloc(mockUserRepository);
+      mockPostRepository = MockPostRepository();
+      mockPostBloc = MockPostBloc(mockPostRepository);
+    });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    blocTest<MockUserBloc, MockUserState>(
+      'Obtener todos los usuarios', 
+      build: ()=> mockUserBloc,
+      act: (bloc)=> bloc.add(const AppStarted()),
+      expect: ()=>[
+        UserLoading(),
+        FindUsers(mockUsers)
+      ]
+    );
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    blocTest<MockUserBloc, MockUserState>(
+      'Buscar por nombre', 
+      build: ()=> mockUserBloc,
+      act: (bloc)=> bloc.add(const SearchUserByName(name: "test 1")),
+      expect: ()=>[
+        UserLoading(),
+        FindUsers( <User>  [
+          User(id: 9, name:"test 9",  userName: "test 9", email: "test9@gmail.com", phone:"+504 3344-4432", website: "test9.com")
+          ]
+        )
+      ]
+    );
+
+    blocTest<MockPostBloc, MockPostState>(
+      'buscar por userId', 
+      build: ()=> mockPostBloc,
+      act: (bloc)=> bloc.add(const GetPostByUserId(userId: 7)),
+      expect: ()=>[
+        PostLoading(),
+        FindPosts(posts: <Post>[
+            Post(id: 1, userId:7, title: "lorem", body: "lorem impu"),
+            Post(id: 2, userId:7, title: "lorem", body: "lorem impu"),
+            Post(id: 3, userId:7, title: "lorem", body: "lorem impu"),
+          ]
+        )
+      ]
+    );
+
+   
+
+    tearDown((){
+      mockUserBloc.close();
+      mockPostBloc.close();
+    });
+    
   });
 }
