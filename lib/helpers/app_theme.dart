@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 final appTheme = ThemeData(
-  primaryColor: Colors.blue.shade900, 
+  primaryColor: const Color(0xff00484e), 
   buttonTheme: ButtonThemeData(
     buttonColor: Colors.red.shade200,
     textTheme: ButtonTextTheme.primary,
   ),
-  appBarTheme: AppBarTheme(
-    color: Colors.blue.shade800,
+  appBarTheme:const AppBarTheme(
+    color:  Color(0xff013b40),
   ),
   textTheme: const TextTheme(
     headline4: TextStyle(

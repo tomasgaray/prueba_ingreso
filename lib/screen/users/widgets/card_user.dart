@@ -21,19 +21,16 @@ class CardUser extends StatelessWidget {
               const Icon(Icons.phone, color: Colors.black54,),
               Text(user.phone!)
             ],),
-             Row(
-               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-               children: [
-                 Row(children: 
-                 [
-                  const Icon(Icons.email, color: Colors.black54),
-                  Text(user.email!)
-                 ],
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor
-                  ),
+             Row(children: 
+             [
+              const Icon(Icons.email, color: Colors.black54),
+              Text(user.email!)
+             ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                TextButton(
                   onPressed: (){
                     Navigator.push(
                       context,
@@ -41,9 +38,9 @@ class CardUser extends StatelessWidget {
                           builder: (context) =>
                               PostScreen(user: user,)),
                     );
-                  }, child: const Text("Show Post"))
-               ],
-             )
+                  }, child:  Text("VER PUBLICACIONES", style:TextStyle(color: Theme.of(context).primaryColor)))
+              ],
+            )
           ],
         ),
       ),

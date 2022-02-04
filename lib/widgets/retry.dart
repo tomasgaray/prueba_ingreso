@@ -9,7 +9,7 @@ class Retry extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: const EdgeInsets.only(top: 15.0),
+        padding: const EdgeInsets.only(top: 15.0, left:10, right: 10),
         child: Column(
           children: [
         const Icon(
@@ -24,7 +24,7 @@ class Retry extends StatelessWidget {
           onPressed: () {
             onTap();
           },
-          child: const Text('Retry', style: TextStyle(color: Colors.white)),
+          child: const Text('Reintentar', style: TextStyle(color: Colors.white)),
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.resolveWith(
                 (state) => Theme.of(context).primaryColor),

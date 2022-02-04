@@ -1,10 +1,9 @@
 import 'dart:convert';
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 import 'package:prueba_ingreso/helpers/helper.dart';
 import 'package:prueba_ingreso/models/user/user.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../environment.dart';
-
 class UserRepository {
   Future<List<User>> getUsers() async {
     try {
@@ -27,8 +26,8 @@ class UserRepository {
 
   Future<List<User>> getUsersLocal()async{
     try {
-      SharedPreferences storage = await SharedPreferences.getInstance();
-      String usersLocalString = storage.getString("users")??"";
+      var box = await Hive.openBox('theDb');
+      String usersLocalString = box.get("users")??"";
       if (usersLocalString != "") {
          Iterable l = json.decode(usersLocalString);
         var listUsers = (l as List).map((e) => User.deserialize(e)).toList();
@@ -52,8 +51,8 @@ class UserRepository {
 
   Future<void> saveUsersLocal({required List<User> users}) async{ 
      try {
-      SharedPreferences storage = await SharedPreferences.getInstance();
-      await storage.setString("users", json.encode(Helper.encondeToJson(users)));
+      var box = await Hive.openBox('theDb');
+      box.put('users', json.encode(Helper.encondeToJson(users)));
     } catch (error) {
       return Future.error(error);
     }

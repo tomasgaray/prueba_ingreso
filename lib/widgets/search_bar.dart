@@ -49,7 +49,11 @@ class _SearchBarState extends State<SearchBar> {
                           controller: _textController,
                           textAlignVertical: TextAlignVertical.bottom,
                           decoration: InputDecoration(
-                            border: const OutlineInputBorder(borderSide: BorderSide(color: Colors.red, width: 1, style: BorderStyle.solid)),// : InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor, 
+                                width: 1, 
+                                style: BorderStyle.solid)),// : InputBorder.none,
                             hintText: widget.hit,
                             hintStyle: const TextStyle(color:Colors.black),
                             prefixIcon: const Icon(
@@ -59,12 +63,21 @@ class _SearchBarState extends State<SearchBar> {
                               borderSide: BorderSide(color: Colors.grey.shade400),
                               gapPadding: 15.0
                             ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Theme.of(context).primaryColor,
+                                width: 2
+                              ),
+                              gapPadding: 15.0
+                            ),
                             suffixIcon: IconButton(
                               onPressed: (){
                                 _textController.clear();
                                 widget.onClean();
                               },
-                              icon: const Icon(Icons.clear),
+                              icon: Icon(
+                                Icons.clear,
+                               color: Theme.of(context).primaryColor ,),
                             ),
                           ),
                           onChanged: (text){

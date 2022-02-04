@@ -10,6 +10,7 @@ abstract class UserEvent extends Equatable {
 class AppStarted extends UserEvent {
   const AppStarted();
 }
+class GetLocalUsers extends UserEvent {}
 class UpdateLocalUsers extends UserEvent {
   const UpdateLocalUsers();
 }

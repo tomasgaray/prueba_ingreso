@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:prueba_ingreso/helpers/helper.dart';
 import 'package:prueba_ingreso/models/user/user.dart';
 import 'package:prueba_ingreso/screen/users/bloc/user_event.dart';
-import 'package:prueba_ingreso/widgets/card_user.dart';
+import 'package:prueba_ingreso/screen/users/widgets/card_user.dart';
+import 'package:prueba_ingreso/widgets/list_empty.dart';
 import 'package:prueba_ingreso/widgets/loading.dart';
 import 'package:prueba_ingreso/widgets/retry.dart';
 import 'package:prueba_ingreso/widgets/search_bar.dart';
-
 import 'bloc/user_bloc.dart';
 import 'bloc/user_state.dart';
+import 'widgets/card_user.dart';
 
 class UserForm extends StatelessWidget {
   const UserForm({Key? key}) : super(key: key);
@@ -33,15 +34,15 @@ class UserForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("List of Users"),),
+      appBar: AppBar(title: const Text("Prueba de Ingreso"),),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              SearchBar(hit:"Search by Name", onTextChange: (name){
+              SearchBar(hit:"Buscar por nombre", onTextChange: (name){
                   BlocProvider.of<UserBloc>(context).add(SearchUserByName(name: name));
                 },
                 onClean: (){
-                  BlocProvider.of<UserBloc>(context).add(const AppStarted());
+                  BlocProvider.of<UserBloc>(context).add(GetLocalUsers());
                 },
               ),
               BlocListener<UserBloc, UserState>(
@@ -50,7 +51,6 @@ class UserForm extends StatelessWidget {
                     Helper.showToasError(context, state.error ?? "Error");
                   }
                 }, child: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-                  
                   if(state is UserLoading){
                     return loading(state.message, Theme.of(context).primaryColor, textColor:  Theme.of(context).primaryColor);
                   }
@@ -64,7 +64,7 @@ class UserForm extends StatelessWidget {
                     return showBody(state, state.users, context);
                   }
                   if(state is ListEmpty){
-                    return const Center(child: Text("List is Empty"));
+                     return const ListIsEmpy();
                   }
                   return Container();
                 
