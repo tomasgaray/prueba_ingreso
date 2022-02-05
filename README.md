@@ -1,12 +1,12 @@
 ## Antes de empezar
+Asegurarse de tener la ultima versión de [flutter 2.10.0 release](https://medium.com/flutter/whats-new-in-flutter-2-10-5aafb0314b12) 
 
-Primero se deben restaurar todos los paquetes con el siguiente comando:
+## Restaurar los paquetes con el siguiente comando:
 
 - flutter pub get
 
 ## Correr el proyecto
 
-- Presionar F5
 - flutter run
 
 ## Para probar los test:
